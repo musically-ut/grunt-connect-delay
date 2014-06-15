@@ -1,4 +1,5 @@
-# grunt-connect-delay v0.1.0
+# grunt-connect-delay v0.1.0  [![Build Status](https://travis-ci.org/musically-ut/grunt-connect-delay.png?branch=master)](https://travis-ci.org/musically-ut/grunt-connect-delay)
+
 
 This plugin provides a delay middleware for Grunt Connect / Express. It can be
 used for introducing artificial delays before proxying certain URLs based on
@@ -32,9 +33,10 @@ Where:
 #### Usage
 
 In your project's Gruntfile:
- * Include the `delayRequest` snippet
- * Add a section named `delay` to your existing Connect definition.
+ * Include the `delayRequest` snippet: `var delayRequest = require('grunt-connect-delay/lib/utils').delayReuest`.
+ * Add a section named `delay` to your existing Connect definition:
  * Load the plugin: `grunt.loadNpmTasks('grunt-connect-delay')`
+ * Add `configureDelayRules` before the web server task.
 
 ```js
 var delayRequestSnippet = require('grunt-connect-delay/lib/utils').delayRequest;
@@ -66,7 +68,19 @@ grunt.initConfig({
 
 grunt.loadNpmTasks('grunt-contrib-connect');
 grunt.loadNpmTasks('grunt-connect-delay');
+
+// "configureDelayRules" should be before the "connect"/"express" task
+grunt.registerTask('server', function (target) {
+    grunt.task.run([
+        'configureDelayRules',
+        'connect:dev'
+    ]);
+});
 ```
 
 Though I haven't tested it, it should work in a similar fashion with
 `grunt-express` task as well.
+
+### Credits
+
+The structure and documentation of this plugin is inspired by [`grunt-connect-rewrite` plugin](https://github.com/viart/grunt-connect-rewrite).

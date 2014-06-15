@@ -1,5 +1,6 @@
 /*
  * grunt-connect-delay
+ * https://github.com/musically-ut/grunt-connect-delay
  *
  * Copyright (c) 2014 Utkarsh Upadhyay
  * Licensed under the MIT license.
