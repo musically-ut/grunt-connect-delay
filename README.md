@@ -1,4 +1,4 @@
-# grunt-connect-delay v0.1.0  [![Build Status](https://travis-ci.org/musically-ut/grunt-connect-delay.png?branch=master)](https://travis-ci.org/musically-ut/grunt-connect-delay)
+# grunt-connect-delay [![Build Status](https://travis-ci.org/musically-ut/grunt-connect-delay.png?branch=master)](https://travis-ci.org/musically-ut/grunt-connect-delay)
 
 
 This plugin provides a delay middleware for Grunt Connect / Express. It can be
