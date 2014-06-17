@@ -9,7 +9,10 @@ RegExp rules.
 
 This plugin requires Grunt `~0.4.1`
 
-If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins.
+If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out
+the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains
+how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as
+install and use Grunt plugins.
 
 ```shell
 npm install grunt-connect-delay --save-dev
@@ -41,6 +44,9 @@ In your project's Gruntfile:
  * Add a section named `delay` to your existing Connect definition:
  * Load the plugin: `grunt.loadNpmTasks('grunt-connect-delay')`
  * Add `configureDelayRules` before the web server task.
+
+To see some logs about the proxying, use the `--verbose` flag while running
+`gurnt`.
 
 ```js
 var delayRequestSnippet = require('grunt-connect-delay/lib/utils').delayRequest;
@@ -87,4 +93,10 @@ Though I haven't tested it, it should work in a similar fashion with
 
 ### Credits
 
-The structure and documentation of this plugin is inspired by [`grunt-connect-rewrite` plugin](https://github.com/viart/grunt-connect-rewrite).
+The structure and documentation of this plugin is inspired by
+[`grunt-connect-rewrite` plugin](https://github.com/viart/grunt-connect-rewrite).
+
+### Release Notes
+
+ - `0.1.1`: Improve logging
+ - `0.1.0`: Initial release

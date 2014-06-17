@@ -15,6 +15,14 @@ function delayShouldBeApprox(startTime, delayShouldBe, test) {
       );
 }
 
+function createAccumulatingLogger(accArray) {
+    return {
+        ok: function () {
+            accArray.push(Array.prototype.join.call(arguments, ' '));
+        }
+    };
+}
+
 exports.connect_delay = {
     setUp: function (done) {
         utils.clearRules();
@@ -100,6 +108,25 @@ exports.connect_delay = {
             delayShouldBeApprox(start, 1, test);
             oneTestDone();
         });
+    },
+    testSettingUpLogger: function (test) {
+        test.expect(0);
+        var logs = [];
+        utils.setLogger(createAccumulatingLogger(logs));
+        test.done();
+    },
+    testProxyLogging: function (test) {
+        test.expect(4);
+        var logs = [], delay = 10;
+        utils.setLogger(createAccumulatingLogger(logs));
+        utils.registerRule({ url: '/api', delay: delay });
+        utils.delayRequest({ url: '/api' }, {}, function () {
+            test.equal(logs.length, 2);
+            test.equal(logs[1], 'Proxying to "/api" after ' + delay + ' ms.');
+            test.done();
+        });
+        test.equal(logs.length, 1);
+        test.equal(logs[0], 'Will proxy to "/api" after ' + delay + ' ms.');
     }
 };
 

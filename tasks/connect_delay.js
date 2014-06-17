@@ -15,7 +15,7 @@ module.exports = function (grunt) {
         var options = this.options({
             rulesProvider: 'connect.delay'
         });
-        utils.log = grunt.log;
+        utils.setLogger(grunt.verbose);
         (grunt.config(options.rulesProvider) || []).forEach(function (rule) {
             rule = rule || {};
             var registeredRule = utils.registerRule({
