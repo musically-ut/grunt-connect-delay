@@ -127,6 +127,10 @@ exports.connect_delay = {
         });
         test.equal(logs.length, 1);
         test.equal(logs[0], 'Will proxy to "/api" after ' + delay + ' ms.');
+    },
+    testRegisterExtendedRule: function (test) {
+        // TODO (UU)
+        test.done();
     }
 };
 
