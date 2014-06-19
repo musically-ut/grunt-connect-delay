@@ -15,10 +15,13 @@ function delayShouldBeApprox(startTime, delayShouldBe, test) {
       );
 }
 
-function createAccumulatingLogger(accArray) {
+function createAccumulatingLogger(accArrayLogs, accArrayErrors) {
     return {
         ok: function () {
-            accArray.push(Array.prototype.join.call(arguments, ' '));
+            accArrayLogs.push(Array.prototype.join.call(arguments, ' '));
+        },
+        error: function () {
+            accArrayErrors.push(Array.prototype.join.call(arguments, ' '));
         }
     };
 }
@@ -129,8 +132,36 @@ exports.connect_delay = {
         test.equal(logs[0], 'Will proxy to "/api" after ' + delay + ' ms.');
     },
     testRegisterExtendedRule: function (test) {
-        // TODO (UU)
-        test.done();
+        test.expect(2);
+        utils.registerRule({
+            url     : '^/test/([0-9]*)/(.*)$'
+          , delay   : '$1'
+          , rewrite : '/$2'
+        });
+
+        var res = { url: '/test/100/other_call' },
+            start = new Date();
+        utils.delayRequest(res, {}, function () {
+            delayShouldBeApprox(start, 100, test);
+            test.equal(res.url, '/other_call');
+            test.done();
+        });
+    },
+    testRegisterExtendedRuleFixedDelay: function (test) {
+        test.expect(2);
+        utils.registerRule({
+            url     : '^/test/([0-9]*)/(.*)$'
+          , delay   : 100
+          , rewrite : '/$2'
+        });
+
+        var res = { url: '/test/100/other_call' },
+            start = new Date();
+        utils.delayRequest(res, {}, function () {
+            delayShouldBeApprox(start, 100, test);
+            test.equal(res.url, '/other_call');
+            test.done();
+        });
     }
 };
 
