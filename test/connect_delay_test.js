@@ -26,6 +26,48 @@ function createAccumulatingLogger(accArrayLogs, accArrayErrors) {
     };
 }
 
+exports.logging_tests = {
+    setUp: function (done) {
+        utils.clearRules();
+        done();
+    },
+    tearDown: function (done) {
+        utils.clearRules();
+        done();
+    },
+    testSettingUpLogger: function (test) {
+        test.expect(0);
+        var logs = [];
+        utils.setLogger(createAccumulatingLogger(logs));
+        test.done();
+    },
+    testProxyLogging: function (test) {
+        test.expect(4);
+        var logs = [], delay = 10;
+        utils.setLogger(createAccumulatingLogger(logs));
+        utils.registerRule({ url: '/api', delay: delay });
+        utils.delayRequest({ url: '/api' }, {}, function () {
+            test.equal(logs.length, 2);
+            test.equal(logs[1], 'Proxying to "/api" after ' + delay + ' ms.');
+            test.done();
+        });
+        test.equal(logs.length, 1);
+        test.equal(logs[0], 'Will proxy to "/api" after ' + delay + ' ms.');
+    },
+    testErrorMessages: function (test) {
+        test.expect(3);
+        var logs = [], errors = [];
+        utils.setLogger(createAccumulatingLogger(logs, errors));
+        utils.registerRule({ url: '/api/([^/]*)/(.*)$', delay: '$1', rewrite: '$2' });
+        utils.delayRequest({ url: '/api/notANumber/destination' }, {}, function () {
+            test.equal(logs.length, 0);
+            test.equal(errors.length, 1);
+            test.equal(errors[0], 'Could not parse the delay "$1" from URL: "/api/notANumber/destination"');
+            test.done();
+        });
+    }
+};
+
 exports.connect_delay = {
     setUp: function (done) {
         utils.clearRules();
@@ -111,25 +153,6 @@ exports.connect_delay = {
             delayShouldBeApprox(start, 1, test);
             oneTestDone();
         });
-    },
-    testSettingUpLogger: function (test) {
-        test.expect(0);
-        var logs = [];
-        utils.setLogger(createAccumulatingLogger(logs));
-        test.done();
-    },
-    testProxyLogging: function (test) {
-        test.expect(4);
-        var logs = [], delay = 10;
-        utils.setLogger(createAccumulatingLogger(logs));
-        utils.registerRule({ url: '/api', delay: delay });
-        utils.delayRequest({ url: '/api' }, {}, function () {
-            test.equal(logs.length, 2);
-            test.equal(logs[1], 'Proxying to "/api" after ' + delay + ' ms.');
-            test.done();
-        });
-        test.equal(logs.length, 1);
-        test.equal(logs[0], 'Will proxy to "/api" after ' + delay + ' ms.');
     },
     testRegisterExtendedRule: function (test) {
         test.expect(2);

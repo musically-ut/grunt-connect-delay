@@ -26,7 +26,12 @@ module.exports = function (grunt) {
             if (registeredRule) {
                 grunt.log.ok('Delay rule created for: [' + registeredRule +'].');
             } else {
-                grunt.log.error('Incorrect delay rule given.');
+                try {
+                    grunt.log.error('Incorrect delay rule given: ', JSON.stringify(rule));
+                } catch (e) {
+                    // Unable to stringify the JSON due to circular references
+                    grunt.log.error('Incorrect delay rule given.');
+                }
             }
         });
     });
