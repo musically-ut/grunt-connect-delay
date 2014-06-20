@@ -185,6 +185,18 @@ exports.connect_delay = {
             test.equal(res.url, '/other_call');
             test.done();
         });
+    },
+    testDefaultRule: function (test) {
+        test.expect(2);
+        utils.registerRule(utils.defaultRule);
+        var res = { url: '/delay/100/original_url' },
+            start = new Date();
+        utils.delayRequest(res, {}, function () {
+            delayShouldBeApprox(start, 100, test);
+            test.equal(res.url, '/original_url');
+            test.done();
+        });
+
     }
 };
 

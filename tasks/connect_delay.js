@@ -13,14 +13,21 @@ var utils = require('../lib/utils');
 module.exports = function (grunt) {
     grunt.registerTask('configureDelayRules', 'Configure connect delay rules.', function () {
         var options = this.options({
-            rulesProvider: 'connect.delay'
+            rulesProvider  : 'connect.delay'
+          , useDefaultRule : true
         });
         utils.setLogger(grunt.verbose);
+
+        if (options.useDefaultRule) {
+            utils.registerRule(utils.defaultRule);
+        }
+
         (grunt.config(options.rulesProvider) || []).forEach(function (rule) {
             rule = rule || {};
             var registeredRule = utils.registerRule({
-                url: rule.url,
-                delay: rule.delay
+                url     : rule.url
+              , delay   : rule.delay
+              , rewrite : rule.rewrite
             });
 
             if (registeredRule) {
