@@ -133,5 +133,6 @@ The structure and documentation of this plugin is inspired by
 
 ### Release Notes
 
- - `0.1.1`: Improve logging
- - `0.1.0`: Initial release
+ - _0.2.0_: Add extended rules and a default rule.
+ - _0.1.1_: Improve logging
+ - _0.1.0_: Initial release
