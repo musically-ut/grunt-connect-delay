@@ -1,5 +1,6 @@
 # grunt-connect-delay [![Build Status](https://travis-ci.org/musically-ut/grunt-connect-delay.png?branch=master)](https://travis-ci.org/musically-ut/grunt-connect-delay)
 
+> A delay proxy middleware for grunt-contrib-connect
 
 This plugin provides a delay middleware for Grunt Connect / Express. It can be
 used for introducing artificial delays before proxying certain URLs based on
@@ -74,13 +75,16 @@ Where:
 #### Usage
 
 In your project's Gruntfile:
- * Include the `delayRequest` snippet: `var delayRequest = require('grunt-connect-delay/lib/utils').delayReuest`.
- * Add a section named `delay` to your existing Connect definition:
+ * Include the `delayRequest` snippet: `var delayRequest = require('grunt-connect-delay/lib/utils').delayRequest`.
  * Load the plugin: `grunt.loadNpmTasks('grunt-connect-delay')`
  * Add `configureDelayRules` before the web server task.
 
+Optional (advanced usage):
+ * Configure options in `configureDelayRules.options` in `initConfig`, or,
+ * Add a section named `delay` to your existing Connect definition
+
 To see some logs about the proxying, use the `--verbose` flag while running
-`gurnt`.
+`grunt`.
 
 ```js
 var delayRequestSnippet = require('grunt-connect-delay/lib/utils').delayRequest;
@@ -133,6 +137,7 @@ The structure and documentation of this plugin is inspired by
 
 ### Release Notes
 
- - _0.2.0_: Add extended rules and a default rule.
+ - _0.2.1_: Improve documentation
+ - _0.2.0_: Add extended rules and a default rule
  - _0.1.1_: Improve logging
  - _0.1.0_: Initial release
