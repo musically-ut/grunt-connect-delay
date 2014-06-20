@@ -1,7 +1,7 @@
 {
   "name": "grunt-connect-delay",
   "description": "Provides a delay proxy for grunt connect.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": {
     "name": "Utkarsh Upadhyay",
     "email": "mail@musicallyut.in"

@@ -137,6 +137,7 @@ The structure and documentation of this plugin is inspired by
 
 ### Release Notes
 
+ - 0.2.2: Bump version to resolve `npm` bug.
  - _0.2.1_: Improve documentation
  - _0.2.0_: Add extended rules and a default rule
  - _0.1.1_: Improve logging
