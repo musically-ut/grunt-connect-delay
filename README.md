@@ -55,21 +55,21 @@ This is the section in the Gruntfile from where the delay rules will be read.
 
 ##### Simple rule format
 
-`{url: '__from__', delay: __milliseconds__}`
+`{url: 'FROM', delay: MILLISECONDS }`
 
 Where:
- * `__from__`: RegExp string to match
- * `__milliseconds__`: The delay in milliseconds to introduce before proceeding with proxying
+ * `FROM`: RegExp string to match
+ * `MILLISECONDS`: The delay in milliseconds to introduce before proceeding with proxying
 
 
 ##### Extended rule format
 
-`{url: '__from_regexp__', delay: '__number_or_replacement__', rewrite: '__replacement__' }`
+`{url: 'FROM_REGEXP', delay: 'NUMBER_OR_REPLACEMENT', rewrite: 'REPLACEMENT' }`
 
 Where:
- - `__from_regexp__`: RegExp string to match the URL and create _groups_ to be used for deducing `delay` and the true proxied URL. e.g. `^/delay/([0-9]*)/(.*)$`.
- - `__number_or_replacement__`: The number of milliseconds (e.g. `1000`) to wait or a string which can be parsed to an integer after a URL (which matches `url`) is replaced by it (e.g. `$1`).
- - `__replacement__`: A string which maps to the destination URL after a URL is replaced by it (e.g. `/$2`).
+ - `FROM_REGEXP`: RegExp string to match the URL and create _groups_ to be used for deducing `delay` and the true proxied URL. e.g. `^/delay/([0-9]*)/(.*)$`.
+ - `NUMBER_OR_REPLACEMENT`: The number of milliseconds (e.g. `1000`) to wait or a string which can be parsed to an integer after a URL (which matches `url`) is replaced by it (e.g. `$1`).
+ - `REPLACEMENT`: A string which maps to the destination URL after a URL is replaced by it (e.g. `/$2`).
 
 
 #### Usage
@@ -95,13 +95,19 @@ grunt.initConfig({
         ],
         dev: {
             options: {
-                middleware: function (connect) {
-                    return [
-                           delayRequestSnippet
-                      // , rewriteRequestSnippet
-                      // , proxyRequestSnippet
-                      // , connect.static(path.resolve(dir))
-                    ];
+                middleware: function (connect, options, middlewares) {
+                    middlewares.unshift(delayRequestSnippet);
+                    return middlewares;
+
+                    // Old style:
+                    // See: https://github.com/gruntjs/grunt-contrib-connect/issues/114
+                    // 
+                    // return [
+                    //        delayRequestSnippet
+                    //      , rewriteRequestSnippet
+                    //      , proxyRequestSnippet
+                    //      , connect.static(path.resolve(dir))
+                    // ];
                 }
             }
         }
@@ -130,6 +136,9 @@ grunt.registerTask('server', function (target) {
 Though I haven't tested it, it should work in a similar fashion with
 `grunt-express` task as well.
 
+You can see how to use this plugin at 
+[musically-ut/grunt-connect-delay-example](https://github.com/musically-ut/grunt-connect-delay-example).
+
 ### Credits
 
 The structure and documentation of this plugin is inspired by
@@ -137,7 +146,8 @@ The structure and documentation of this plugin is inspired by
 
 ### Release Notes
 
- - 0.2.2: Bump version to resolve `npm` bug.
+ - 0.2.3: Update usage instuctions
+ - _0.2.2_: Bump version to resolve `npm` bug
  - _0.2.1_: Improve documentation
  - _0.2.0_: Add extended rules and a default rule
  - _0.1.1_: Improve logging
