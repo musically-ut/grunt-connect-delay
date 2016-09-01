@@ -15,7 +15,7 @@ prefix `/delay/5000/` to the URL.
 
 ## Getting started
 
-This plugin requires Grunt `~0.4.1`
+This plugin requires Grunt `>=0.4.0`
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out
 the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains
@@ -145,8 +145,8 @@ The structure and documentation of this plugin is inspired by
 [`grunt-connect-rewrite` plugin](https://github.com/viart/grunt-connect-rewrite).
 
 ### Release Notes
-
- - 0.2.3: Update usage instuctions
+ - _0.2.4_: Updated peerDependency to support grunt >=1.0.0
+ - _0.2.3_: Update usage instuctions
  - _0.2.2_: Bump version to resolve `npm` bug
  - _0.2.1_: Improve documentation
  - _0.2.0_: Add extended rules and a default rule
